@@ -82,19 +82,31 @@ async def fetchServerInfo(context):
     await context.send(f'Server Name: {guild.owner.display_name}')
 
 
+@bot.command(name='limpiar',pass_context=True)
+@commands.has_permissions(administrator=True)
+async def clear(context, amount=None):
+    if amount is None:
+        await context.channel.purge(limit=5)
+    elif amount == "all":
+        await context.channel.purge()
+    else:
+        await context.channel.purge(limit=int(amount))
+    await context.send("Listo Jefe ;)")
+
+
 @bot.command(name='saldazo')
-async def fetchServerInfo(context):
+async def getSaldazo(context):
     response = api.saldazo(None)
     await context.send(response)
 
 
 @bot.command(name='shop')
-async def fetchServerInfo(context):
+async def doShop(context):
     response = api.shop(None)
     await context.send(response)
 
 @bot.command(name='tip')
-async def fetchServerInfo(context):
+async def doTip(context):
     response = api.tip(None)
     await context.send(response)
 
