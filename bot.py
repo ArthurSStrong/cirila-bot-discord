@@ -4,10 +4,11 @@ from discord.ext import commands
 from huachiapi import Huachiapi
 import random
 import csv
+from pprint import pprint
 
 
 bot = Bot(command_prefix='!')
-token = ''
+token = 'ODE0MzQ4Mjg3NjM2MTQ0MTM4.YDci8Q.IjvvpD0Mj3K5C28jvrv43Tby5x0'
 
 api = Huachiapi()
 
@@ -110,6 +111,29 @@ async def doTip(context):
     response = api.tip(None)
     await context.send(response)
 
+@bot.command(name='atraco')
+async def atraco(context):
+    
+    if context.message.reference is None:
+        return
+
+    print(context.message.reference.message_id)
+
+    reference_msg = await context.fetch_message(context.message.reference.message_id)
+
+    try:
+        victim = reference_msg.author.id
+        if victim == bot.user.id:
+            response = "A mi no me robas wey!!"
+        if victim == reference_msg.author.id:
+            response = "Note puedes robar a ti mismo wey!!"
+        else:
+            currency_string = "${:,.2f}".format(float(random.choice(range(1, 1000000))))
+            response = "{} robó {} <:huachi:809238593696432200> de la cartera de {}".format(context.author.mention, currency_string, reference_msg.author.mention)
+        await context.send(response)
+    except Exception as e:
+        print(e)    
+
 
 @bot.event
 async def on_message(message):
@@ -117,8 +141,10 @@ async def on_message(message):
     # we do not want the bot to reply to itself
     if message.author.id == bot.user.id:
         return
+    if message.content.startswith("!"):
+        return
 
-    print(message.content)
+    #print(message.content)
 
     if bot.user.mentioned_in(message):
         if any(map(message.content.lower().__contains__, _af_det)):
