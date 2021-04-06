@@ -112,9 +112,11 @@ async def doTip(context):
     await context.send(response)
 
 @bot.command(name='atraco')
+@commands.has_permissions(administrator=True)
 async def atraco(context):
     
     if context.message.reference is None:
+        await context.send("Ni robar sabes wey!!")
         return
 
     print(context.message.reference.message_id)
@@ -123,16 +125,17 @@ async def atraco(context):
 
     try:
         victim = reference_msg.author.id
+        print(victim)
         if victim == bot.user.id:
             response = "A mi no me robas wey!!"
-        if victim == reference_msg.author.id:
-            response = "Note puedes robar a ti mismo wey!!"
+        elif victim == context.author.id:
+            response = "No te puedes robar a ti mismo wey!!"
         else:
-            currency_string = "${:,.2f}".format(float(random.choice(range(1, 1000000))))
+            currency_string = "${:,.2f}".format(float(random.choice(range(1, 99999))))
             response = "{} robó {} <:huachi:809238593696432200> de la cartera de {}".format(context.author.mention, currency_string, reference_msg.author.mention)
         await context.send(response)
     except Exception as e:
-        print(e)    
+        print(e)   
 
 
 @bot.event
