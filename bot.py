@@ -8,7 +8,7 @@ from pprint import pprint
 
 
 bot = Bot(command_prefix='!')
-token = 'ODE0MzQ4Mjg3NjM2MTQ0MTM4.YDci8Q.IjvvpD0Mj3K5C28jvrv43Tby5x0'
+token = ''
 
 api = Huachiapi()
 
