@@ -1,15 +1,15 @@
+import os
+import random
+import csv
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 from huachiapi import Huachiapi
-import random
-import csv
 from pprint import pprint
 
 
 bot = Bot(command_prefix='!')
-token = ''
-
+token = (os.environ['DISCORD_BOT_TOKEN'] if 'DISCORD_BOT_TOKEN' in os.environ else '')
 api = Huachiapi()
 
 
