@@ -146,6 +146,15 @@ async def atraco(context):
 
 
 @bot.event
+async def on_member_join(member):
+    try:
+        channel = bot.get_channel(821542780730998844)
+        await channel.send(f"<:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725> {message.author.mention} <:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725>")
+    except Exception as e:
+        print(e)
+
+
+@bot.event
 async def on_message(message):
     await bot.process_commands(message)
     # we do not want the bot to reply to itself
