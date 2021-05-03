@@ -6,10 +6,17 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 from huachiapi import Huachiapi
 from pprint import pprint
-
+import redis
 
 bot = Bot(command_prefix='!')
-token = (os.environ['DISCORD_BOT_TOKEN'] if 'DISCORD_BOT_TOKEN' in os.environ else '')
+
+try:
+    redis_db = redis.StrictRedis(host="localhost", port=6379, db=0, charset="utf-8", decode_responses=True)
+    token = redis_db.get('DISCORD_BOT_TOKEN')
+except Exception as e:
+    print("no redis!")
+    token = (os.environ['DISCORD_BOT_TOKEN'] if 'DISCORD_BOT_TOKEN' in os.environ else '')
+
 api = Huachiapi()
 
 
@@ -22,7 +29,7 @@ REPLIES = './txt/contestaciones.csv'
 def load_replies(file):
     SORTS = dict()
 
-    for row in csv.DictReader(open(file, "r", encoding="utf-8")):      
+    for row in csv.DictReader(open(file, "r", encoding="utf-8")):
         SORTS[row["detonador"]] = row["respuesta"]
 
     return SORTS
@@ -114,7 +121,7 @@ async def doTip(context):
 @bot.command(name='atraco')
 @commands.has_permissions(administrator=True)
 async def atraco(context):
-    
+
     if context.message.reference is None:
         await context.send("Ni robar sabes wey!!")
         return
@@ -135,7 +142,7 @@ async def atraco(context):
             response = "{} robó {} <:huachi:809238593696432200> de la cartera de {}".format(context.author.mention, currency_string, reference_msg.author.mention)
         await context.send(response)
     except Exception as e:
-        print(e)   
+        print(e)
 
 
 @bot.event
