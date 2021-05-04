@@ -8,7 +8,10 @@ from huachiapi import Huachiapi
 from pprint import pprint
 import redis
 
-bot = Bot(command_prefix='!')
+intents = discord.Intents.default()
+intents.members = True
+bot = Bot(command_prefix='!', intents=intents)
+
 
 try:
     redis_db = redis.StrictRedis(host="localhost", port=6379, db=0, charset="utf-8", decode_responses=True)
@@ -151,7 +154,7 @@ async def atraco(context):
 async def on_member_join(member):
     try:
         channel = bot.get_channel(821542780730998844)
-        await channel.send(f"<:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725> {member.mention} <:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725>")
+        await channel.send("<:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725>")
     except Exception as e:
         print(e)
 
