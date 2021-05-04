@@ -149,7 +149,7 @@ async def atraco(context):
 async def on_member_join(member):
     try:
         channel = bot.get_channel(821542780730998844)
-        await channel.send(f"<:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725> {message.author.mention} <:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725>")
+        await channel.send(f"<:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725> {member.mention} <:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725><:f_apunta_michi:821874920945352725>")
     except Exception as e:
         print(e)
 
