@@ -24,6 +24,7 @@ AF_DET= './txt/afecto_detonador.txt'
 AF_RESP = './txt/afecto_respuesta.txt'
 RESP_DEF = './txt/respuestas_por_defecto.txt'
 REPLIES = './txt/contestaciones.csv'
+CHAT_REPLIES = './txt/chat_detonador.csv'
 
 
 def load_replies(file):
@@ -69,6 +70,7 @@ _af_det = load_file(AF_DET)
 _af_resp = load_file(AF_RESP)
 _def_resp = load_file(RESP_DEF)
 _replies = load_replies(REPLIES)
+_chat_replies = load_replies(CHAT_REPLIES)
 
 
 @bot.event
@@ -164,7 +166,6 @@ async def on_message(message):
         return
 
     #print(message.content)
-
     if bot.user.mentioned_in(message):
         if any(map(message.content.lower().__contains__, _af_det)):
             resp = random.choice(_af_resp)
@@ -173,6 +174,9 @@ async def on_message(message):
             await message.channel.send(resp)
         else:
             resp = random.choice(_def_resp)
+            await message.channel.send(resp)
+    else:
+        if resp := _get_any_dict(_chat_replies, message.content.lower()):
             await message.channel.send(resp)
 
 bot.run(token)
