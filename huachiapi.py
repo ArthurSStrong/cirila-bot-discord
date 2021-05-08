@@ -1,3 +1,5 @@
+from lib.instascrapper import Instascrapper
+
 class Huachiapi:
 
     description = "description"
@@ -12,7 +14,11 @@ class Huachiapi:
 
     # Another instance method
     def shop(self, *args):
-        return f"{self.default_msg}"
+        if args[0] == 'frase_piolinera':
+            i = Instascrapper("https://www.instagram.com/explore/tags/frasesdeldia/")
+            return i.get_photo()
+        else:
+            return f"{self.default_msg}"
 
     # Another instance method
     def tip(self, *args):
