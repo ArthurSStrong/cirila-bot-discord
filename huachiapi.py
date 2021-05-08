@@ -16,7 +16,12 @@ class Huachiapi:
     def shop(self, *args):
         if args[0] == 'frase_piolinera':
             i = Instascrapper("https://www.instagram.com/explore/tags/frasesdeldia/")
-            return i.get_photo()
+            reponse = i.get_photo()
+            if reponse:
+                return response
+            else:
+                return f"{self.default_msg}"
+
         else:
             return f"{self.default_msg}"
 
