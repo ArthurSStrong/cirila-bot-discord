@@ -66,4 +66,7 @@ class Instascrapper:
             _list = self.__get_photos(item)
             _images = _images + _list
 
-        return random.choice(_images)
+        if _images:
+            return random.choice(_images)
+        else:
+            return 0
