@@ -116,8 +116,10 @@ async def getSaldazo(context):
 @bot.command(name='shop')
 @commands.has_permissions(administrator=True)
 async def doShop(context, *args):
-    response = api.shop(args)
-    #await context.send(response)
+    try:
+        response = api.shop(args[0])
+    except:
+        response = api.shop(None)
     await context.send(response)
 
 @bot.command(name='tip')
