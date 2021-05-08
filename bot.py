@@ -116,9 +116,9 @@ async def getSaldazo(context):
 @bot.command(name='shop')
 @commands.has_permissions(administrator=True)
 async def doShop(context, *args):
-    response = api.shop(args[0])
+    response = api.shop(args)
     #await context.send(response)
-    await channel.send(file=discord.File(response))
+    await context.send(file=discord.File(response))
 
 @bot.command(name='tip')
 async def doTip(context):
