@@ -1,6 +1,7 @@
 import os
 import random
 import csv
+import json
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
@@ -11,14 +12,16 @@ import redis
 intents = discord.Intents.default()
 intents.members = True
 bot = Bot(command_prefix='!', intents=intents)
-
+allowed_roles = ['Admin']
 
 try:
     redis_db = redis.StrictRedis(host="localhost", port=6379, db=0, charset="utf-8", decode_responses=True)
     token = redis_db.get('DISCORD_BOT_TOKEN')
+    allowed_roles = allowed_roles +  json.loads(redis_db.get('ALLOWED_ROLES'))
 except Exception as e:
     print("no redis!")
     token = (os.environ['DISCORD_BOT_TOKEN'] if 'DISCORD_BOT_TOKEN' in os.environ else '')
+
 
 api = Huachiapi()
 
@@ -114,7 +117,7 @@ async def getSaldazo(context):
 
 
 @bot.command(name='shop')
-@commands.has_permissions(administrator=True)
+@commands.has_any_role(allowed_roles) 
 async def doShop(context, *args):
     try:
         response = api.shop(args[0])
@@ -128,7 +131,7 @@ async def doTip(context):
     await context.send(response)
 
 @bot.command(name='atraco')
-@commands.has_permissions(administrator=True)
+@commands.has_any_role(allowed_roles) 
 async def atraco(context):
 
     if context.message.reference is None:
