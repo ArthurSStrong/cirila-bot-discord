@@ -130,7 +130,7 @@ async def doTip(context):
     await context.send(response)
 
 @bot.command(name='atraco')
-@commands.has_permissions(administrator=True)
+@commands.has_any_role(*allowed_roles)
 async def atraco(context):
 
     if context.message.reference is None:
