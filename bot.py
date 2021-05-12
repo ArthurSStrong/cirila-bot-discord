@@ -116,7 +116,7 @@ async def getSaldazo(context):
 
 
 @bot.command(name='shop')
-@commands.has_any_role(allowed_roles)
+@commands.has_any_role(*allowed_roles)
 async def doShop(context, *args):
     try:
         response = api.shop(args[0])
