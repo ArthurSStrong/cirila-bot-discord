@@ -6,7 +6,6 @@ import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 from huachiapi import Huachiapi
-from pprint import pprint
 import redis
 
 intents = discord.Intents.default()
@@ -117,7 +116,7 @@ async def getSaldazo(context):
 
 
 @bot.command(name='shop')
-@commands.has_any_role(allowed_roles) 
+@commands.has_any_role(allowed_roles)
 async def doShop(context, *args):
     try:
         response = api.shop(args[0])
@@ -131,7 +130,7 @@ async def doTip(context):
     await context.send(response)
 
 @bot.command(name='atraco')
-@commands.has_any_role(allowed_roles) 
+@commands.has_permissions(administrator=True)
 async def atraco(context):
 
     if context.message.reference is None:
