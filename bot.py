@@ -129,6 +129,19 @@ async def doTip(context):
     response = api.tip(None)
     await context.send(response)
 
+@bot.command(name='role')
+@commands.has_any_role("Admin","Testigo de la Crepa") #permissions
+async def role(ctx, user : discord.Member, *, role : discord.Role):
+  if role.position > ctx.author.top_role.position: #if the role is above users top role it sends error
+    return await ctx.send('**:x: | Este rol es superior al tuyo!**') 
+  if role in user.roles:
+      await user.remove_roles(role) #removes the role if user already has
+      await ctx.send(f"Removido {role} de {user.mention}")
+  else:
+      await user.add_roles(role) #adds role if not already has it
+      await ctx.send(f"Añadido {role} a {user.mention}") 
+
+
 @bot.command(name='atraco')
 @commands.has_any_role(*allowed_roles)
 async def atraco(context):
